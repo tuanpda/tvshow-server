@@ -1,4 +1,0 @@
-#### users API
-
-#### Get all 
-GET http://localhost:9999/api/users/

@@ -1,11 +1,5 @@
 const mssql = require("mssql");
 
-// const SQL_DRIVER = "SQL server";
-// const SQL_SERVER = "TUANPDA\\SQLEXPRESS";
-// const SQL_DATABASE = "tinhluong_bu";
-// const SQL_UID = "sa";
-// const SQL_PWD = "Sa@1";
-
 const SQL_DRIVER = "SQL server";
 const SQL_SERVER = "10.42.240.10";
 // const SQL_SERVER = "103.104.119.144\\SQLEXPRESS";
