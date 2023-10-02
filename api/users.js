@@ -236,10 +236,9 @@ router.post("/account", upload.single("avatar"), async (req, res) => {
       .input("createdAt", req.body.createdAt)
       .input("createdBy", req.body.createdBy)
       .input("avatar", linkAvatar)
-      .input("ghichu", req.body.ghichu)
-      .input("maxuong", req.body.maxuong).query(`
-                INSERT INTO users (username, name, password, role, createdAt, createdBy, avatar, ghichu, maxuong) 
-                VALUES (@username, @name, @password, @role, @createdAt, @createdBy, @avatar, @ghichu, @maxuong);
+      .input("ghichu", req.body.ghichu).query(`
+                INSERT INTO users (username, name, password, role, createdAt, createdBy, avatar, ghichu) 
+                VALUES (@username, @name, @password, @role, @createdAt, @createdBy, @avatar, @ghichu);
             `);
     const user = req.body;
     let token = jwt.sign({ user }, process.env.SECRET);
