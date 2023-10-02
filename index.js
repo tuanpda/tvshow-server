@@ -13,7 +13,7 @@ app.use(bodyParse.urlencoded({ extended: false }));
 app.use(bodyParse.json());
 
 app.get("/", (req, res) => {
-  res.send("<h1>🤖 TVSHOW</h1>");
+  res.send("<h1>🤖 TVSHOW - THACHHA</h1>");
 });
 
 app.use("/api/users", require("./api/users"));
@@ -21,7 +21,5 @@ app.use("/api/nhanvien", require("./api/nhanvien"));
 app.use("/api/online", require("./api/online"));
 
 app.listen(process.env.PORT, () => {
-  console.log(
-    `Server started running on ${process.env.PORT} for ${process.env.NODE_ENV}`
-  );
+  console.log(`Server started running on ${process.env.PORT}`);
 });
