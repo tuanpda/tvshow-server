@@ -84,17 +84,17 @@ router.delete("/:_id", async (req, res) => {
     const result = await pool
       .request()
       .input("_id", req.params._id)
-      .query(`SELECT * FROM nhanvien WHERE _id = @_id`);
-    let nhanvien = result.recordset.length ? result.recordset[0] : null;
-    if (nhanvien) {
+      .query(`SELECT * FROM chuongtrinhct WHERE _id = @_id`);
+    let ctct = result.recordset.length ? result.recordset[0] : null;
+    if (ctct) {
       await pool
         .request()
         .input("_id", req.params._id)
-        .query(`DELETE FROM nhanvien WHERE _id = @_id;`);
-      res.json(nhanvien);
+        .query(`DELETE FROM chuongtrinhct WHERE _id = @_id;`);
+      res.json(ctct);
     } else {
       res.status(404).json({
-        message: "Không tìm thấy nhân viên này",
+        message: "Không tìm thấy bản ghi",
       });
     }
   } catch (error) {
