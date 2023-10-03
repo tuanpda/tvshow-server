@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/users", require("./api/users"));
 app.use("/api/nhanvien", require("./api/nhanvien"));
-app.use("/api/online", require("./api/online"));
+app.use("/api/chuongtrinhct.js", require("./api/chuongtrinhct.js"));
 
 app.listen(process.env.PORT, () => {
   console.log(`Server started running on ${process.env.PORT}`);
