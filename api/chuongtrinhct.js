@@ -3,7 +3,6 @@ const router = express.Router();
 const { pool } = require("../database/dbinfo");
 
 // Add Data
-// Add linh vuc 1
 router.post("/addlinhvuc", async (req, res) => {
   try {
     await pool.connect();
