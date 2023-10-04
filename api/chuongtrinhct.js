@@ -4,33 +4,7 @@ const { pool } = require("../database/dbinfo");
 
 // Add Data
 // Add linh vuc 1
-router.post("/addlinhvuc1", async (req, res) => {
-  try {
-    await pool.connect();
-    const result = await pool
-      .request()
-      .input("noidung", req.body.noidung)
-      .input("kehoach", req.body.kehoach)
-      .input("dathuchien", req.body.dathuchien)
-      .input("malinhvuc", req.body.malinhvuc)
-      .input("linhvuc", req.body.linhvuc)
-      .input("createdAt", req.body.createdAt).query(`
-                      INSERT INTO chuongtrinhct (noidung, kehoach, dathuchien, malinhvuc, linhvuc, createdAt) 
-                      VALUES (@noidung, @kehoach, @dathuchien, @malinhvuc, @linhvuc, @createdAt);
-                  `);
-    const chuongtrinhct = req.body;
-    res.json({
-      data: chuongtrinhct,
-      success: true,
-      message: "add success!",
-    });
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
-
-// Add linh vuc 2
-router.post("/addlinhvuc2", async (req, res) => {
+router.post("/addlinhvuc", async (req, res) => {
   try {
     await pool.connect();
     const result = await pool
@@ -159,6 +133,38 @@ router.get("/linhvuc2", async (req, res) => {
       .request()
       .query(
         `SELECT * FROM chuongtrinhct where malinhvuc=2 order by createdAt desc`
+      );
+    const data = result.recordset;
+    res.json(data);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+// Get all data linh vuc 3
+router.get("/linhvuc3", async (req, res) => {
+  try {
+    await pool.connect();
+    const result = await pool
+      .request()
+      .query(
+        `SELECT * FROM chuongtrinhct where malinhvuc=3 order by createdAt desc`
+      );
+    const data = result.recordset;
+    res.json(data);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+// Get all data linh vuc 4
+router.get("/linhvuc4", async (req, res) => {
+  try {
+    await pool.connect();
+    const result = await pool
+      .request()
+      .query(
+        `SELECT * FROM chuongtrinhct where malinhvuc=4 order by createdAt desc`
       );
     const data = result.recordset;
     res.json(data);
