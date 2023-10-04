@@ -29,6 +29,32 @@ router.post("/addlinhvuc1", async (req, res) => {
   }
 });
 
+// Add linh vuc 2
+router.post("/addlinhvuc2", async (req, res) => {
+  try {
+    await pool.connect();
+    const result = await pool
+      .request()
+      .input("noidung", req.body.noidung)
+      .input("kehoach", req.body.kehoach)
+      .input("dathuchien", req.body.dathuchien)
+      .input("malinhvuc", req.body.malinhvuc)
+      .input("linhvuc", req.body.linhvuc)
+      .input("createdAt", req.body.createdAt).query(`
+                      INSERT INTO chuongtrinhct (noidung, kehoach, dathuchien, malinhvuc, linhvuc, createdAt) 
+                      VALUES (@noidung, @kehoach, @dathuchien, @malinhvuc, @linhvuc, @createdAt);
+                  `);
+    const chuongtrinhct = req.body;
+    res.json({
+      data: chuongtrinhct,
+      success: true,
+      message: "add success!",
+    });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 // Update
 // Update linh vuc 1
 router.patch("/linhvuc1/:_id", async (req, res) => {
