@@ -14,10 +14,9 @@ router.post("/addlinhvuc1", async (req, res) => {
       .input("dathuchien", req.body.dathuchien)
       .input("malinhvuc", req.body.malinhvuc)
       .input("linhvuc", req.body.linhvuc)
-      .input("createdBy", req.body.createdBy)
       .input("createdAt", req.body.createdAt).query(`
-                      INSERT INTO chuongtrinhct (noidung, kehoach, dathuchien, malinhvuc, linhvuc, createdBy, createdAt) 
-                      VALUES (@noidung, @kehoach, @dathuchien, @malinhvuc, @linhvuc, @createdBy, @createdAt);
+                      INSERT INTO chuongtrinhct (noidung, kehoach, dathuchien, malinhvuc, linhvuc, createdAt) 
+                      VALUES (@noidung, @kehoach, @dathuchien, @malinhvuc, @linhvuc, @createdAt);
                   `);
     const chuongtrinhct = req.body;
     res.json({
