@@ -38,6 +38,37 @@ const { pool } = require("../database/dbinfo");
 //   }
 // });
 
+router.patch("/thangnam/:_id", async (req, res) => {
+  try {
+    await pool.connect();
+    const result = await pool
+      .request()
+      .input("_id", req.params._id)
+      .query(`SELECT * FROM thangnam WHERE _id = @_id`);
+    let thangnam = result.recordset[0];
+    // console.log(req.body.updatedAt);
+    if (thangnam) {
+      await pool
+        .request()
+        .input("_id", req.params._id)
+        .input("thang", req.body.thang)
+        .input("nam", req.body.nam)
+        .query(
+          `UPDATE thangnam SET
+              thang = @thang,
+              nam =@nam
+              WHERE _id = @_id;`
+        );
+      res.json({
+        success: true,
+        message: "Update success !",
+      });
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 router.post("/addchuongtrinhct", async (req, res) => {
   try {
     await pool.connect();
@@ -45,12 +76,11 @@ router.post("/addchuongtrinhct", async (req, res) => {
       .request()
       .input("noidung", req.body.noidung)
       .input("kehoach", req.body.kehoach)
-      .input("dangthuchien", req.body.dangthuchien)
       .input("dathuchien", req.body.dathuchien)
       .input("createdBy", req.body.createdBy)
       .input("createdAt", req.body.createdAt).query(`
-                      INSERT INTO chuongtrinhct (noidung, kehoach, dangthuchien, dathuchien, createdBy, createdAt) 
-                      VALUES (@noidung, @kehoach, @dangthuchien, @dathuchien, @createdBy, @createdAt);
+                      INSERT INTO chuongtrinhct (noidung, kehoach, dathuchien, createdBy, createdAt) 
+                      VALUES (@noidung, @kehoach, @dathuchien, @createdBy, @createdAt);
                   `);
     const chuongtrinhct = req.body;
     res.json({
@@ -70,6 +100,18 @@ router.get("/", async (req, res) => {
     const result = await pool
       .request()
       .query(`SELECT * FROM chuongtrinhct order by createdAt desc`);
+    const data = result.recordset;
+    res.json(data);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+// get tháng
+router.get("/thangnam", async (req, res) => {
+  try {
+    await pool.connect();
+    const result = await pool.request().query(`SELECT * FROM thangnam`);
     const data = result.recordset;
     res.json(data);
   } catch (error) {
