@@ -2,42 +2,40 @@ const express = require("express");
 const router = express.Router();
 const { pool } = require("../database/dbinfo");
 
-// router.patch("/:_id", async (req, res) => {
-//   try {
-//     await pool.connect();
-//     const result = await pool
-//       .request()
-//       .input("_id", req.params._id)
-//       .query(`SELECT * FROM nhanvien WHERE _id = @_id`);
-//     let nhanvien = result.recordset[0];
-//     // console.log(req.body.updatedAt);
-//     if (nhanvien) {
-//       await pool
-//         .request()
-//         .input("_id", req.params._id)
-//         .input("tennv", req.body.tennv)
-//         .input("mapb", req.body.mapb)
-//         .input("makhoi", req.body.makhoi)
-//         .input("tenkhoi", req.body.tenkhoi)
-//         .input("tenphong", req.body.tenphong)
-//         .query(
-//           `UPDATE nhanvien SET
-//               tennv = @tennv,
-//               mapb =@mapb,
-//               makhoi = @makhoi,
-//               tenkhoi = @tenkhoi,
-//               WHERE _id = @_id;`
-//         );
-//       res.json({
-//         success: true,
-//         message: "Update success !",
-//       });
-//     }
-//   } catch (error) {
-//     res.status(500).json(error);
-//   }
-// });
+// update
+router.patch("/:_id", async (req, res) => {
+  try {
+    await pool.connect();
+    const result = await pool
+      .request()
+      .input("_id", req.params._id)
+      .query(`SELECT * FROM chuongtrinhct WHERE _id = @_id`);
+    let ctct = result.recordset[0];
+    if (ctct) {
+      await pool
+        .request()
+        .input("_id", req.params._id)
+        .input("noidung", req.body.noidung)
+        .input("kehoach", req.body.kehoach)
+        .input("dathuchien", req.body.dathuchien)
+        .query(
+          `UPDATE chuongtrinhct SET
+              noidung = @noidung,
+              kehoach =@kehoach,
+              dathuchien = @dathuchien
+              WHERE _id = @_id;`
+        );
+      res.json({
+        success: true,
+        message: "Update success !",
+      });
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 
+// update ngaythangnam
 router.patch("/thangnam/:_id", async (req, res) => {
   try {
     await pool.connect();
