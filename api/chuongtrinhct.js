@@ -126,6 +126,22 @@ router.get("/linhvuc1", async (req, res) => {
   }
 });
 
+// Get all data linh vuc 2
+router.get("/linhvuc2", async (req, res) => {
+  try {
+    await pool.connect();
+    const result = await pool
+      .request()
+      .query(
+        `SELECT * FROM chuongtrinhct where malinhvuc=2 order by createdAt desc`
+      );
+    const data = result.recordset;
+    res.json(data);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 // get tháng
 router.get("/thangnam", async (req, res) => {
   try {
