@@ -2,8 +2,35 @@ const express = require("express");
 const router = express.Router();
 const { pool } = require("../database/dbinfo");
 
-// update
-router.patch("/:_id", async (req, res) => {
+// Add Data
+// Add linh vuc 1
+router.post("/addlinhvuc1", async (req, res) => {
+  try {
+    await pool.connect();
+    const result = await pool
+      .request()
+      .input("noidung", req.body.noidung)
+      .input("kehoach", req.body.kehoach)
+      .input("dathuchien", req.body.dathuchien)
+      .input("createdBy", req.body.createdBy)
+      .input("createdAt", req.body.createdAt).query(`
+                      INSERT INTO chuongtrinhct (noidung, kehoach, dathuchien, createdBy, createdAt) 
+                      VALUES (@noidung, @kehoach, @dathuchien, @createdBy, @createdAt);
+                  `);
+    const chuongtrinhct = req.body;
+    res.json({
+      data: chuongtrinhct,
+      success: true,
+      message: "add success!",
+    });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+// Update
+// Update linh vuc 1
+router.patch("/linhvuc1/:_id", async (req, res) => {
   try {
     await pool.connect();
     const result = await pool
@@ -35,7 +62,7 @@ router.patch("/:_id", async (req, res) => {
   }
 });
 
-// update ngaythangnam
+// Update ngay thang nam
 router.patch("/thangnam/:_id", async (req, res) => {
   try {
     await pool.connect();
@@ -67,37 +94,30 @@ router.patch("/thangnam/:_id", async (req, res) => {
   }
 });
 
-router.post("/addchuongtrinhct", async (req, res) => {
-  try {
-    await pool.connect();
-    const result = await pool
-      .request()
-      .input("noidung", req.body.noidung)
-      .input("kehoach", req.body.kehoach)
-      .input("dathuchien", req.body.dathuchien)
-      .input("createdBy", req.body.createdBy)
-      .input("createdAt", req.body.createdAt).query(`
-                      INSERT INTO chuongtrinhct (noidung, kehoach, dathuchien, createdBy, createdAt) 
-                      VALUES (@noidung, @kehoach, @dathuchien, @createdBy, @createdAt);
-                  `);
-    const chuongtrinhct = req.body;
-    res.json({
-      data: chuongtrinhct,
-      success: true,
-      message: "add success!",
-    });
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
-
-// get all data
+// Get Data
+// Get all data
 router.get("/", async (req, res) => {
   try {
     await pool.connect();
     const result = await pool
       .request()
       .query(`SELECT * FROM chuongtrinhct order by createdAt desc`);
+    const data = result.recordset;
+    res.json(data);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+// Get all data linh vuc 1
+router.get("/linhvuc1", async (req, res) => {
+  try {
+    await pool.connect();
+    const result = await pool
+      .request()
+      .query(
+        `SELECT * FROM chuongtrinhct where malinhvuc=1 order by createdAt desc`
+      );
     const data = result.recordset;
     res.json(data);
   } catch (error) {
@@ -117,8 +137,9 @@ router.get("/thangnam", async (req, res) => {
   }
 });
 
-// delete api by id
-router.delete("/:_id", async (req, res) => {
+// Delete Data
+// Delete api by id
+router.delete("/linhvuc1/:_id", async (req, res) => {
   try {
     await pool.connect();
     const result = await pool
