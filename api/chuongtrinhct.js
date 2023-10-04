@@ -180,8 +180,7 @@ router.get("/thangnam", async (req, res) => {
 });
 
 // Delete Data
-// Delete api by id
-router.delete("/linhvuc1/:_id", async (req, res) => {
+router.delete("/linhvuc/:_id", async (req, res) => {
   try {
     await pool.connect();
     const result = await pool
