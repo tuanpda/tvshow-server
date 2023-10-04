@@ -56,8 +56,7 @@ router.post("/addlinhvuc2", async (req, res) => {
 });
 
 // Update
-// Update linh vuc 1
-router.patch("/linhvuc1/:_id", async (req, res) => {
+router.patch("/linhvuc/:_id", async (req, res) => {
   try {
     await pool.connect();
     const result = await pool
