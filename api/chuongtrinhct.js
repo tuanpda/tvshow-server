@@ -45,11 +45,13 @@ router.patch("/linhvuc/:_id", async (req, res) => {
         .input("noidung", req.body.noidung)
         .input("kehoach", req.body.kehoach)
         .input("dathuchien", req.body.dathuchien)
+        .input("istyle", req.body.istyle)
         .query(
           `UPDATE chuongtrinhct SET
               noidung = @noidung,
               kehoach =@kehoach,
-              dathuchien = @dathuchien
+              dathuchien = @dathuchien,
+              istyle = @istyle
               WHERE _id = @_id;`
         );
       res.json({
