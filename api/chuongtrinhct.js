@@ -11,7 +11,7 @@ var storage = multer.diskStorage({
     cb(null, "D:\\TUANPDA\\CODE_APP\\tvs\\tvshow-client\\static");
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalname);
+    cb(null, file.originalname);
   },
 });
 
@@ -46,7 +46,8 @@ router.post("/addlinhvuc", async (req, res) => {
 
 // Đẩy file
 router.post("/uploadfile", upload.single("urlfile"), async (req, res) => {
-  console.log(req.file);
+  // console.log(req.file);
+  res.json({ success: true, message: "Upload file success!" });
 });
 
 // Update
