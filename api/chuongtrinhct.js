@@ -46,7 +46,7 @@ router.post("/addlinhvuc", async (req, res) => {
 
 // Đẩy file
 router.post("/uploadfile", upload.single("urlfile"), async (req, res) => {
-  console.log(req);
+  console.log(req.file);
 });
 
 // Update
