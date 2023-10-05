@@ -8,7 +8,7 @@ var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     /* Nhớ sửa đường dẫn khi deploy lên máy chủ */
     //cb(null, "E:\\PROJECT\\docthuBhxh\\client\\static\\avatar");
-    cb(null, "D:\\CODE\\TVSHOW\\client\\static");
+    cb(null, "D:\\TUANPDA\\CODE_APP\\tvs\\tvshow-client\\static");
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + "-" + file.originalname);
