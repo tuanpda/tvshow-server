@@ -17,7 +17,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/users", require("./api/users"));
-app.use("/api/nhanvien", require("./api/nhanvien"));
 app.use("/api/chuongtrinhct", require("./api/chuongtrinhct"));
 
 app.listen(process.env.PORT, () => {
