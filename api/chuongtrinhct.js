@@ -1,6 +1,21 @@
 const express = require("express");
 const router = express.Router();
 const { pool } = require("../database/dbinfo");
+const multer = require("multer");
+
+// SET STORAGE
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    /* Nhớ sửa đường dẫn khi deploy lên máy chủ */
+    //cb(null, "E:\\PROJECT\\docthuBhxh\\client\\static\\avatar");
+    cb(null, "D:\\CODE\\TVSHOW\\client\\static");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+
+var upload = multer({ storage: storage });
 
 // Add Data
 router.post("/addlinhvuc", async (req, res) => {
@@ -27,6 +42,11 @@ router.post("/addlinhvuc", async (req, res) => {
   } catch (error) {
     res.status(500).json(error);
   }
+});
+
+// Đẩy file
+router.post("/uploadfile", upload.single("urlfile"), async (req, res) => {
+  console.log(req);
 });
 
 // Update
